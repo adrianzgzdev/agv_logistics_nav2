@@ -1,0 +1,63 @@
+➜  agv_ws sed -n '1,220p' ~/agv_ws/scripts/warehouse_v2_autopilot.zsh
+#!/usr/bin/env zsh
+set -e
+
+source ~/agv_ws/install/setup.zsh
+
+pub() {
+  local lin="$1"
+  local ang="$2"
+  local hz="$3"
+  local secs="$4"
+  local times=$(( hz * secs ))
+  echo "CMD: lin=${lin} ang=${ang} for ${secs}s @ ${hz}Hz"
+  ros2 topic pub -r ${hz} /cmd_vel geometry_msgs/msg/Twist "{linear: {x: ${lin}}, angular: {z: ${ang}}}" --times ${times} >/dev/null
+  ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.0}}" >/dev/null
+  sleep 0.6
+}
+
+HZ=10
+
+# Safe mapping speeds
+LIN=0.12
+LIN_SOFT=0.08
+LIN_TURN=0.05
+ANG_TURN=0.14
+
+echo "== Warehouse v2 autopilot: perimeter + 3 aisles =="
+
+# Warm start (anchor)
+pub 0.12 0.00 $HZ 6
+
+# --- Perimeter (rectangle) ---
+pub $LIN 0.00 $HZ 38
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN 0.00 $HZ 50
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN 0.00 $HZ 38
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN 0.00 $HZ 50
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+# --- Aisles ---
+pub $LIN 0.00 $HZ 28
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN_SOFT 0.00 $HZ 10
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN 0.00 $HZ 28
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN_SOFT 0.00 $HZ 10
+pub $LIN_TURN $ANG_TURN $HZ 7
+
+pub $LIN 0.00 $HZ 28
+
+echo "== Done. Robot stopped. Save map with: =="
+echo "mkdir -p ~/agv_ws/maps && ros2 run nav2_map_server map_saver_cli -f ~/agv_ws/maps/warehouse_v2_autopilot"
+
+#Esto es el autopilot v2 

@@ -1,0 +1,11 @@
+# Ignorar carpetas de compilación de ROS 2
+build/
+install/
+log/
+
+# Ignorar archivos ocultos del sistema y editores
+.vscode/
+.DS_Store
+*~
+*.pyc
+__pycache__/
