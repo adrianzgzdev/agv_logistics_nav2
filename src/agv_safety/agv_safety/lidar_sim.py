@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 import math
-import time # Importamos time aquí arriba, como debe ser
+import time 
 
 class LidarSim(Node):
     def __init__(self):
@@ -21,7 +21,6 @@ class LidarSim(Node):
         scan.range_min = 0.1
         scan.range_max = 10.0
 
-        # Lógica de la pared dinámica bien indentada (alineada)
         distancia_dinamica = 3.0 + math.sin(time.time())
         scan.ranges = [distancia_dinamica] * 100
         

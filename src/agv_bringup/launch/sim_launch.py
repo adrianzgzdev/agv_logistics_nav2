@@ -22,7 +22,6 @@ def generate_launch_description():
     declare_args = [
         DeclareLaunchArgument('use_sim_time', default_value='true'),
         DeclareLaunchArgument('robot_name',   default_value='mi_linde'),
-        # ✅ Ajusta estos defaults a un sitio “limpio” de tu almacén
         DeclareLaunchArgument('x',            default_value='0.0'),
         DeclareLaunchArgument('y',            default_value='0.0'),
         DeclareLaunchArgument('z',            default_value='0.5'),
@@ -73,7 +72,7 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         output='screen',
-        parameters=[{'use_sim_time': use_sim_time}], # <-- ¡AÑADE ESTA LÍNEA AQUÍ!
+        parameters=[{'use_sim_time': use_sim_time}], 
         arguments=[
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
             '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',

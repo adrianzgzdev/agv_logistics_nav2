@@ -19,7 +19,6 @@ def generate_launch_description():
     bringup_share = get_package_share_directory('agv_bringup')
     slam_share = get_package_share_directory('agv_slam')
 
-    # 1) Start simulation + RViz first (so /clock and TF are ready)
     sim_rviz = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(bringup_share, 'launch', 'sim_rviz.launch.py')
@@ -27,7 +26,6 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    # 2) Start SLAM after a short delay (reduces TF/clock startup race)
     slam_delayed = TimerAction(
         period=3.0,
         actions=[

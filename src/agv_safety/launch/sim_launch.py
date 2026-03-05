@@ -15,7 +15,6 @@ def generate_launch_description():
     with open(urdf_file, 'r') as infp:
         robot_description_config = infp.read()
     
-    # 1. Cerebro del robot
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -23,14 +22,12 @@ def generate_launch_description():
         parameters=[{'robot_description': robot_description_config, 'use_sim_time': True}]
     )
 
-    # 2. Simulador
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')]),
         launch_arguments={'gz_args': f'-r {world_file}'}.items(),
     )
 
-    # 3. Aparecer el robot
     spawn_entity = Node(
         package='ros_gz_sim',
         executable='create',
@@ -38,7 +35,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    # 4. EL SÚPER PUENTE INTEGRADO (El salvador del tiempo)
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',

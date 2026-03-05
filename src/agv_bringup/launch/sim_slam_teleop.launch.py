@@ -20,7 +20,6 @@ def generate_launch_description():
     bringup_share = get_package_share_directory('agv_bringup')
     slam_share = get_package_share_directory('agv_slam')
 
-    # 1) Start sim + RViz first
     sim_rviz = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(bringup_share, 'launch', 'sim_rviz.launch.py')
@@ -28,7 +27,6 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    # 2) Start SLAM after a short delay
     slam_delayed = TimerAction(
         period=3.0,
         actions=[
@@ -41,7 +39,7 @@ def generate_launch_description():
         ]
     )
 
-    # 3) Teleop (delayed too)
+
     teleop_node = Node(
         package='teleop_twist_keyboard',
         executable='teleop_twist_keyboard',
@@ -52,7 +50,7 @@ def generate_launch_description():
     )
 
     teleop_delayed = TimerAction(
-        period=4.0,   # after SLAM starts
+        period=4.0,  
         actions=[teleop_node]
     )
 

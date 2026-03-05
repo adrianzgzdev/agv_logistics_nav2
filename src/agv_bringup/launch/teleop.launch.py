@@ -8,7 +8,7 @@ def generate_launch_description():
         executable='teleop_twist_keyboard',
         name='teleop_twist_keyboard',
         output='screen',
-        prefix='xterm -e',  # abre una ventana aparte para poder escribir teclas
+        prefix='xterm -e',  
         remappings=[('/cmd_vel', '/cmd_vel')],
     )
 

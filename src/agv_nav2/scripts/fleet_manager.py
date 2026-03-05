@@ -5,35 +5,30 @@ from rclpy.node import Node
 from rclpy.action import ActionClient
 from nav2_msgs.action import NavigateToPose
 from action_msgs.msg import GoalStatus
-import time  # NUEVO: Importamos el reloj de Python para simular la carga
+import time  
 
 class FleetManager(Node):
     def __init__(self):
         super().__init__('fleet_manager_node')
         self.action_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
         
-        # === LA HOJA DE RUTA DEL SGA ===
-        # Aquí puedes añadir tantas misiones como quieras.
         self.rutas = [
             {"nombre": "Pallet A (Zona de Recogida)", "x": -0.039, "y": 5.55, "espera": 5},
             {"nombre": "Zona de Expedición (Entrega)", "x": 0.64, "y": 0.087, "espera": 0}
         ]
-        self.paso_actual = 0 # Empezamos por la misión 0
+        self.paso_actual = 0 
 
     def iniciar_jornada(self):
         self.get_logger().info('SGA: Esperando a que el AGV esté en línea y rearmado...')
         self.action_client.wait_for_server()
-        # Arrancamos el bucle de misiones
         self.enviar_siguiente_mision()
 
     def enviar_siguiente_mision(self):
-        # Comprobamos si ya hemos terminado toda la lista
         if self.paso_actual >= len(self.rutas):
             self.get_logger().info('SGA: [FIN DE TURNO] Todas las misiones completadas. AGV en reposo.')
             rclpy.shutdown()
             return
 
-        # Cogemos los datos del destino actual
         destino = self.rutas[self.paso_actual]
         
         goal_msg = NavigateToPose.Goal()
@@ -66,13 +61,11 @@ class FleetManager(Node):
         if status == GoalStatus.STATUS_SUCCEEDED:
             self.get_logger().info(f"SGA: [ÉXITO] AGV ha aparcado en {destino['nombre']}.")
             
-            # Simulamos el tiempo que tardan las horquillas en coger/dejar el palet
             if destino['espera'] > 0:
                 self.get_logger().info(f"SGA: Iniciando maniobra de carga. Esperando {destino['espera']} segundos...")
                 time.sleep(destino['espera'])
                 self.get_logger().info("SGA: ¡Carga completada y asegurada!")
 
-            # Sumamos 1 al paso y volvemos a llamar a la función (Bucle)
             self.paso_actual += 1
             self.enviar_siguiente_mision()
             
@@ -84,7 +77,6 @@ def main(args=None):
     rclpy.init(args=args)
     sga_node = FleetManager()
     
-    # Arrancamos el proceso
     sga_node.iniciar_jornada()
     
     rclpy.spin(sga_node)

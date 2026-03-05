@@ -2,7 +2,7 @@
 build/
 install/
 log/
-
+xdocuments_adri/
 # Ignorar archivos ocultos del sistema y editores
 .vscode/
 .DS_Store
