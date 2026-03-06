@@ -27,7 +27,6 @@ def generate_launch_description():
         executable='async_slam_toolbox_node',
         name='slam_toolbox',
         output='screen',
-        # Force node name so lifecycle manager can target it reliably
         arguments=['--ros-args', '-r', '__node:=slam_toolbox'],
         parameters=[slam_params, {'use_sim_time': use_sim_time}],
     )
