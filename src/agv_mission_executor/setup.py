@@ -24,6 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'mission_node = agv_mission_executor.mission_executor_node:main',
+            'mission_node2 = agv_mission_executor.mission_executor_node2:main'
         ],
     },
 )
