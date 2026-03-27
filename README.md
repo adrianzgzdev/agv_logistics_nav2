@@ -324,10 +324,4 @@ Electromechanical Technician | AGV/AMR Field Service | Transitioning into Roboti
 
 ---
 
-## 🏷️ Suggested repository description
 
-**Autonomous AGV logistics platform using ROS 2 Jazzy, Nav2, Gazebo, mission execution, and zone-based safety supervision.**
-
-## 🏷️ Suggested topics
-
-`ros2` `jazzy` `nav2` `gazebo` `python` `robotics` `agv` `amr` `autonomous-vehicles` `warehouse-automation`
