@@ -15,6 +15,8 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
         (os.path.join('share', package_name, 'urdf'), glob('urdf/*')),
         (os.path.join('share', package_name, 'maps'), glob('maps/*')),
+        (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        (os.path.join('share', package_name, 'scripts'), glob('scripts/*.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -33,6 +35,10 @@ setup(
             'brain_node = agv_safety.brain_node:main',
             'tf_broadcaster = agv_safety.tf_broadcaster:main',
             'lidar_sim = agv_safety.lidar_sim:main',
+            'safety_monitor_node = agv_safety.safety_monitor_node:main',
+
         ],
     },
 )
+
+# Este es el setup.py He actualizado entry_points pero en data_files hay muchas cosas. Me ayudas porfi
