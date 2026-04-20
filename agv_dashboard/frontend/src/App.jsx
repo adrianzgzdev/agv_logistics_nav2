@@ -76,6 +76,7 @@ export default function App() {
           }}>
             ROS 2 Jazzy · Nav2 · FastAPI
           </span>
+          
           <span style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '10px',
@@ -86,6 +87,22 @@ export default function App() {
             color: '#f59e0b',
           }}>
             MOCK MODE
+          </span>
+
+          
+          <span style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '10px',
+            padding: '2px 8px',
+            borderRadius: '3px',
+            background: agv.connected && new URLSearchParams(window.location.search).get('mock') === 'false'
+              ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
+            border: `1px solid ${agv.connected && new URLSearchParams(window.location.search).get('mock') === 'false'
+              ? 'rgba(34,197,94,0.25)' : 'rgba(245,158,11,0.25)'}`,
+            color: agv.connected && new URLSearchParams(window.location.search).get('mock') === 'false'
+              ? '#22c55e' : '#f59e0b',
+          }}>
+            {new URLSearchParams(window.location.search).get('mock') === 'false' ? 'LIVE' : 'MOCK MODE'}
           </span>
         </div>
       </header>

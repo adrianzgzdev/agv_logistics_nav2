@@ -1,11 +1,16 @@
-# Ignorar carpetas de compilación de ROS 2
+# Ignore ROS 2 build folders
 build/
 install/
 log/
 zdocuments_adri/
-# Ignorar archivos ocultos del sistema y editores
+# Ignore hidden system/editor files
 .vscode/
 .DS_Store
 *~
 *.pyc
 __pycache__/
+
+# Project 5 assets not ready yet
+src/agv_description/meshes/hei5_agv*
+src/agv_description/urdf/hei5_agv*
+src/agv_description/meshes/test_cube_clean.stl

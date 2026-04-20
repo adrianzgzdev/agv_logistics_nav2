@@ -27,7 +27,8 @@ def generate_launch_description():
         DeclareLaunchArgument('z',            default_value='0.5'),
         DeclareLaunchArgument('yaw',          default_value='0.0'),
     ]
-
+    # Project 4 uses the Linde AGV model in Gazebo
+    
     urdf_file = os.path.join(pkg_share, 'urdf', 'linde_agv.urdf')
     with open(urdf_file, 'r') as f:
         robot_description = f.read()
